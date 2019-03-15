@@ -12,7 +12,7 @@ class Greeter { // 声明Greeter类
     }
 }
 
-let greeter = new Greeter("world");  // 实例化
+let greeter2 = new Greeter("world");  // 实例化
 
 
 // 继承
@@ -93,7 +93,7 @@ class Employee extends Person {
 
 let howard = new Employee("Howard", "Sales");
 console.log(howard.getElevatorPitch());
-console.log(howard.name); // 错误,无法在外部访问protected的属性
+// console.log(howard.name); // 错误,无法在外部访问protected的属性
 
 
 // readonly修饰符，只读属性必须在声明或者构造函数被初始化
@@ -107,7 +107,7 @@ class Octopus {
 
 let dad = new Octopus("Michael");
 
-dad.name = "31232" //错误：只读属性
+// dad.name = "31232" //错误：只读属性
 
 
 // 修饰符(readonly、private、protected)简化声明成员 Octopus类的简化,
@@ -120,14 +120,15 @@ class OctopusSimple {
 
 let dadSimple = new OctopusSimple("Michael")
 
-dadSimple.name = "31321"
 
-// 存取器 ，防止随意修改和读取
+// 存取器 ，防止随意修改和读取，set get。如果只有get没有set，默认成员会变成readonly
 
 let passcode = "secret passcodes"
 
 class EmployeeHavePrevent {
-    private _fullName: string;
+    constructor(private _fullName: string) {
+
+    }
     get fullName(): string {
         return this._fullName
     }
@@ -141,11 +142,45 @@ class EmployeeHavePrevent {
     }
 }
 
-let employee = new EmployeeHavePrevent();
+let employee = new EmployeeHavePrevent("32131");
 
 employee.fullName = "1233"
 
 
+// 静态属性 static 只存在类本身，而不存在类的实例上
 
+class Grid {
+    static origin = { x: 0, y: 0 };
+
+    constructor(public scale: number) { }
+
+    calculateDistanceFromOrigin(point: { x: number, y: number }) {
+        let xDist = (point.x - Grid.origin.x);
+        let yDist = (point.y - Grid.origin.y);
+        console.log(Math.sqrt(xDist * xDist + yDist * yDist) / this.scale)
+    }
+}
+
+let grid1 = new Grid(5.0)
+
+grid1.calculateDistanceFromOrigin({ x: 20, y: 20 })
+
+// 抽象类 Abstract 定义成员，不包含方法体，其抽象修饰的方法必须在派生类中实现
+
+abstract class AnimalAbstract {
+    constructor(name: string) {
+
+    }
+    abstract makeSound(): void;
+    move(): void {
+        console.log("romaimngs the each..")
+    }
+}
+
+class AnimalReal extends AnimalAbstract {
+    makeSound() {
+        console.log(1111)
+    }
+}
 
 
